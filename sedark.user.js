@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SEDARK
 // @namespace    zachary@techyteen.tk
-// @version      0.4.1b
+// @version      0.4.2b
 // @description  Dark theme for Stack Exchange
 // @author       Zachary Wander
 
@@ -32,7 +32,7 @@
 // @grant        none
 // ==/UserScript==
 
-/*global jQuery*/
+/*global document*/
 
 const str = window.location.href;
 
@@ -62,15 +62,26 @@ const sites = [
     'meta.stackexchange.com'
 ];
 
+function createLink(href) {
+    const link = document.createElement('link');
+    link.href = href;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+  	link.class = '--apng-checked';
+  	return link;
+}
+
+function appendLink(link) {
+  document.getElementsByTagName('head')[0].appendChild(link);
+}
+
 if (sites.includes(spl[2])) {
     (function() {
-        jQuery('head').append('<link rel="stylesheet" type="text/css" href="https://rawgit.com/zacharee/se-dark/master/audark.css" class="--apng-checked">');
-    
+      appendLink(createLink('https://raw.githubusercontent.com/sarxos/se-dark/master/audark.css'));
     })();
 } else if (spl[2] === "chat.stackexchange.com" || spl[2] === "chat.stackoverflow.com") {
     (function() {
-        jQuery('head').append('<link rel="stylesheet" type="text/css" href="https://rawgit.com/zacharee/se-dark/master/sechatdark.css" class="--apng-checked">');
-    
+    	appendLink(createLink('https://raw.githubusercontent.com/sarxos/se-dark/master/sechatdark.css'));
     })();
 }
 
